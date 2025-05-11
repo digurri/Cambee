@@ -14,6 +14,7 @@
 ```bash
 npm install
 npm run dev
+```
 
 ## 📁 폴더 구조 (예정)
 
