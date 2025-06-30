@@ -5,11 +5,19 @@ export default function ChatScreen() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
 
-  const sendMessage = () => {
-    if (!input.trim()) return;
-    setMessages([...messages, { id: Date.now().toString(), text: input, sender: 'me' }]);
-    setInput('');
-  };
+  const sendMessage = async () => {
+  const newMessage = { text: input, sender: 'me' };
+  setMessages([...messages, newMessage]);
+
+  const response = await fetch('http://your-api/chat', {
+    method: 'POST',
+    body: JSON.stringify({ message: input }),
+  });
+
+  const data = await response.json();
+  setMessages(prev => [...prev, { text: data.reply, sender: 'bot' }]);
+};
+
 
   return (
     <View style={styles.container}>
